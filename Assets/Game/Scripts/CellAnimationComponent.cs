@@ -19,7 +19,7 @@ namespace TestAmayaQuiz
 
         public void PlayWrongAnswerAnim()
         {
-            _transform.DOPunchPosition(Vector3.right * 0.3f, 0.4f).OnComplete(() => _transform.DOLocalMoveX(0, 0.1f));
+            _transform.DOPunchPosition(Vector3.right * 0.3f, 0.4f).SetEase(Ease.InBounce).OnComplete(() => _transform.DOLocalMoveX(0, 0.1f));
         }
 
         public void PlayRightAnswerAnimation(Action onAnimationEnded = null)
