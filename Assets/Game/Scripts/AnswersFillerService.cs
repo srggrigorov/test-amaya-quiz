@@ -3,12 +3,14 @@ using System.Linq;
 using TestAmayaQuiz.Data;
 using UnityEngine;
 
+
+//Сервис для заполнения ячеек вариантами ответов из набора данных
 namespace TestAmayaQuiz
 {
     public class AnswersFillerService
     {
-        private AnswerChooseService _answerChooseService;
-        private CellsGeneratorService _cellsGeneratorService;
+        private readonly AnswerChooseService _answerChooseService;
+        private readonly CellsGeneratorService _cellsGeneratorService;
 
         private string _rightAnswer;
         private AnswersData _answerData;
@@ -19,22 +21,26 @@ namespace TestAmayaQuiz
             _cellsGeneratorService = cellsGeneratorService;
 
             _cellsGeneratorService.OnCellsCreated += FillCells;
-            _answerChooseService.OnAnswerChosen += (answer, answerData) =>
+            _answerChooseService.OnAnswerChosen += (answer, answerData, _) =>
             {
                 _rightAnswer = answer;
                 _answerData = answerData;
             };
 
         }
-        private void FillCells(Cell[] cells)
+        private void FillCells(Cell[] cells, bool _)
         {
             Dictionary<string, SpriteWithRotation> answersDict = _answerData.AnswersDict;
+            //Выбираем случайную ячейку и заполняем ее правильным ответом
             int rightAnswerCellIndex = Random.Range(0, cells.Length);
             cells[rightAnswerCellIndex].SetData(_rightAnswer, answersDict[_rightAnswer].Sprite, answersDict[_rightAnswer].RotationAngle);
 
+            //Создаем словарь использованных вариантов и добавляем туда правильный ответ
             Dictionary<string, SpriteWithRotation> usedAnswers = new Dictionary<string, SpriteWithRotation>();
             usedAnswers[_rightAnswer] = answersDict[_rightAnswer];
 
+            
+            //Заполняем оставшиеся ячеками вариантами ответов, которые не были использованы. Поворачиваем спрайты на заданный угол
             for (int i = 0; i < cells.Length; i++)
             {
                 if (i == rightAnswerCellIndex)

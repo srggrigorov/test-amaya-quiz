@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using TestAmayaQuiz;
-using UnityEngine;
-
 namespace TestAmayaQuiz
 {
     public class AnswerComparerService
@@ -11,7 +6,7 @@ namespace TestAmayaQuiz
 
         public AnswerComparerService(AnswerChooseService answerChooseService)
         {
-            answerChooseService.OnAnswerChosen += (answer, _) => _rightAnswer = answer;
+            answerChooseService.OnAnswerChosen += (answer, _, firstTime) => _rightAnswer = answer;
         }
 
         public bool IsRightAnswer(string selectedAnswer) => _rightAnswer.Equals(selectedAnswer);

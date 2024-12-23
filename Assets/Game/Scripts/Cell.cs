@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace TestAmayaQuiz
@@ -24,8 +22,20 @@ namespace TestAmayaQuiz
             _imageRenderer.transform.localEulerAngles = Vector3.zero + new Vector3(0, 0, rotationAngle);
         }
 
-        public void PlayWrongAnswerAnim() => _cellAnimationComponent?.PlayWrongAnswerAnim();
+        public void PlayWrongAnswerAnim()
+        {
+            if (_cellAnimationComponent != null)
+            {
+                _cellAnimationComponent.PlayWrongAnswerAnim();
+            }
+        }
 
-        public void PlayRightAnswerAnim(Action onAnimationComplete = null) => _cellAnimationComponent?.PlayRightAnswerAnimation(onAnimationComplete);
+        public void PlayRightAnswerAnim(Action onAnimationComplete = null)
+        {
+            if (_cellAnimationComponent != null)
+            {
+                _cellAnimationComponent.PlayRightAnswerAnimation(onAnimationComplete);
+            }
+        }
     }
 }
